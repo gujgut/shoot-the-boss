@@ -19,12 +19,16 @@ public class shoot_everything : PhysicsGame
     private Image tahtiKuva = LoadImage("tahti.png");
 
     private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
+    private int kenttanumero = 1;
+    
 
     public override void Begin()
+    
     {
+        seuraavakentta();
         Gravity = new Vector(0, -1000);
 
-        LuoKentta();
+        
         LisaaNappaimet();
 
         Camera.Follow(pelaaja1);
@@ -34,17 +38,35 @@ public class shoot_everything : PhysicsGame
         MasterVolume = 0.5;
     }
 
-    private void LuoKentta()
+    void seuraavakentta()
     {
-        TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
+        ClearAll();
+        if (kenttanumero == 1) LuoKentta("kentta1");
+        else if (kenttanumero == 2) LuoKentta( "kentta2");
+        
+    }
+
+    private void LuoKentta(string nimi)
+    {
+        TileMap kentta = TileMap.FromLevelAsset(nimi+".txt");
         kentta.SetTileMethod('#', LisaaTaso);
         kentta.SetTileMethod('*', LisaaTahti);
-        kentta.SetTileMethod('N', LisaaPelaaja);
+        kentta.SetTileMethod('N', LisaaPelaaja); 
+        kentta.SetTileMethod('M',LisaaMaali);
         kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
         Level.CreateBorders();
         Level.Background.CreateGradient(Color.White, Color.SkyBlue);
     }
 
+    private void LisaaMaali(Vector paikka, double leveys, double korkeus)
+    {
+        PhysicsObject maali = PhysicsObject.CreateStaticObject(leveys, korkeus);
+        maali.Position = paikka;
+        maali.Color = Color.BloodRed;
+        maali.Tag = "maali";
+        Add(maali);
+
+    }
     private void LisaaTaso(Vector paikka, double leveys, double korkeus)
     {
         PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus);
@@ -69,7 +91,7 @@ public class shoot_everything : PhysicsGame
         pelaaja1.Position = paikka;
         pelaaja1.Mass = 4.0;
         pelaaja1.Image = pelaajanKuva;
-        AddCollisionHandler(pelaaja1, "tahti", TormaaTahteen);
+        AddCollisionHandler(pelaaja1, "maali", Tormaamaaliin);
         Add(pelaaja1);
     }
 
@@ -102,10 +124,12 @@ public class shoot_everything : PhysicsGame
         hahmo.Jump(nopeus);
     }
 
-    private void TormaaTahteen(PhysicsObject hahmo, PhysicsObject tahti)
+    private void Tormaamaaliin(PhysicsObject hahmo, PhysicsObject maali)
     {
         maaliAani.Play();
-        MessageDisplay.Add("Keräsit tähden!");
-        tahti.Destroy();
+        MessageDisplay.Add("bossihuone");
+        kenttanumero++;
+        Begin();
+
     }
 }

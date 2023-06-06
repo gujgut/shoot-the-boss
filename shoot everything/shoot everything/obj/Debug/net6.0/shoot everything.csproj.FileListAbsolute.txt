@@ -58,3 +58,4 @@ C:\MyTemp\vaanvi\shoot-the-boss\shoot everything\shoot everything\obj\Debug\net6
 C:\MyTemp\vaanvi\shoot-the-boss\shoot everything\shoot everything\obj\Debug\net6.0\shoot everything.pdb
 C:\MyTemp\vaanvi\shoot-the-boss\shoot everything\shoot everything\obj\Debug\net6.0\shoot everything.genruntimeconfig.cache
 C:\MyTemp\vaanvi\shoot-the-boss\shoot everything\shoot everything\bin\Debug\net6.0\Content\shootter.png
+C:\MyTemp\vaanvi\shoot-the-boss\shoot everything\shoot everything\bin\Debug\net6.0\Content\kentta2.txt

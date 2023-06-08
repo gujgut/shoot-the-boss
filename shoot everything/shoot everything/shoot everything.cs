@@ -14,6 +14,7 @@ public class shoot_everything : PhysicsGame
     private const int RUUDUN_KOKO = 40;
 
     private PlatformCharacter pelaaja1;
+    private Vector aloituspaikka;
 
     private Image pelaajanKuva = LoadImage("shootter.png");
     private Image tahtiKuva = LoadImage("killfodder.png");
@@ -82,9 +83,14 @@ public class shoot_everything : PhysicsGame
         killfodder.Position = paikka;
         killfodder.Image = tahtiKuva;
         killfodder.Tag = "killfodder";
-        Add(killfodder);
+        Add(killfodder); 
+        AddCollisionHandler(killfodder,TormaaKillfodderiin);
     }
 
+    private void TormaaKillfodderiin(PhysicsObject tormaaja, PhysicsObject kohde)
+    {
+        pelaaja1.Position = aloituspaikka;
+    }
     private void LisaaPelaaja(Vector paikka, double leveys, double korkeus)
     {
         pelaaja1 = new PlatformCharacter(leveys, korkeus);
@@ -93,6 +99,7 @@ public class shoot_everything : PhysicsGame
         pelaaja1.Image = pelaajanKuva;
         AddCollisionHandler(pelaaja1, "maali", Tormaamaaliin);
         Add(pelaaja1);
+        aloituspaikka = pelaaja1.Position;
     }
 
     private void LisaaNappaimet()

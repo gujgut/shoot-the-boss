@@ -16,7 +16,7 @@ public class shoot_everything : PhysicsGame
     private PlatformCharacter pelaaja1;
 
     private Image pelaajanKuva = LoadImage("shootter.png");
-    private Image tahtiKuva = LoadImage("tahti.png");
+    private Image tahtiKuva = LoadImage("killfodder.png");
 
     private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
     private int kenttanumero = 1;
@@ -50,7 +50,7 @@ public class shoot_everything : PhysicsGame
     {
         TileMap kentta = TileMap.FromLevelAsset(nimi+".txt");
         kentta.SetTileMethod('#', LisaaTaso);
-        kentta.SetTileMethod('*', LisaaTahti);
+        kentta.SetTileMethod('*', LisaaVihollinen);
         kentta.SetTileMethod('N', LisaaPelaaja); 
         kentta.SetTileMethod('M',LisaaMaali);
         kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
@@ -75,14 +75,14 @@ public class shoot_everything : PhysicsGame
         Add(taso);
     }
 
-    private void LisaaTahti(Vector paikka, double leveys, double korkeus)
+    private void LisaaVihollinen(Vector paikka, double leveys, double korkeus)
     {
-        PhysicsObject tahti = PhysicsObject.CreateStaticObject(leveys, korkeus);
-        tahti.IgnoresCollisionResponse = true;
-        tahti.Position = paikka;
-        tahti.Image = tahtiKuva;
-        tahti.Tag = "tahti";
-        Add(tahti);
+        PhysicsObject killfodder = PhysicsObject.CreateStaticObject(leveys, korkeus);
+        killfodder.IgnoresCollisionResponse = true;
+        killfodder.Position = paikka;
+        killfodder.Image = tahtiKuva;
+        killfodder.Tag = "killfodder";
+        Add(killfodder);
     }
 
     private void LisaaPelaaja(Vector paikka, double leveys, double korkeus)

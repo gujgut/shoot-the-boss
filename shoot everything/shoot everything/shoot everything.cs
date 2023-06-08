@@ -78,13 +78,14 @@ public class shoot_everything : PhysicsGame
 
     private void LisaaVihollinen(Vector paikka, double leveys, double korkeus)
     {
-        PhysicsObject killfodder = PhysicsObject.CreateStaticObject(leveys, korkeus);
-        killfodder.IgnoresCollisionResponse = true;
+        PhysicsObject killfodder = new PhysicsObject(leveys, korkeus);
+        killfodder.IgnoresCollisionResponse = false;
         killfodder.Position = paikka;
         killfodder.Image = tahtiKuva;
         killfodder.Tag = "killfodder";
         Add(killfodder); 
-        AddCollisionHandler(killfodder,TormaaKillfodderiin);
+        
+        
     }
 
     private void TormaaKillfodderiin(PhysicsObject tormaaja, PhysicsObject kohde)
@@ -98,9 +99,15 @@ public class shoot_everything : PhysicsGame
         pelaaja1.Mass = 4.0;
         pelaaja1.Image = pelaajanKuva;
         AddCollisionHandler(pelaaja1, "maali", Tormaamaaliin);
+        AddCollisionHandler(pelaaja1, "killfodder", TormaaKillfodderiin);
         Add(pelaaja1);
         aloituspaikka = pelaaja1.Position;
+        pelaaja1.Weapon = new AssaultRifle(30, 10);
+        pelaaja1.Weapon.ProjectileCollision = AmmusOsui;
     }
+
+    void AmmusOsui(PhysicsObject ammus, PhysicsObject kohde)
+    {}
 
     private void LisaaNappaimet()
     {

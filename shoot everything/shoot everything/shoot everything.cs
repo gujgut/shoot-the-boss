@@ -107,7 +107,20 @@ public class shoot_everything : PhysicsGame
     }
 
     void AmmusOsui(PhysicsObject ammus, PhysicsObject kohde)
-    {}
+    {
+        ammus.Destroy();
+    }
+    void AmmuAseella(PlatformCharacter pelaaja)
+    {
+        PhysicsObject ammus = pelaaja.Weapon.Shoot();
+
+        if (ammus != null)
+        {
+            //ammus.Size *= 3;
+            //ammus.Image = ...
+            //ammus.MaximumLifetime = TimeSpan.FromSeconds(2.0);
+        }
+    }
 
     private void LisaaNappaimet()
     {
@@ -117,7 +130,7 @@ public class shoot_everything : PhysicsGame
         Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, -NOPEUS);
         Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
         Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
-
+        Keyboard.Listen(Key.Space, ButtonState.Pressed,AmmuAseella, "Pelaaja ampuu", pelaaja1);
         ControllerOne.Listen(Button.Back, ButtonState.Pressed, Exit, "Poistu pelistä");
 
         ControllerOne.Listen(Button.DPadLeft, ButtonState.Down, Liikuta, "Pelaaja liikkuu vasemmalle", pelaaja1,
